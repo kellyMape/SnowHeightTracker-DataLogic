@@ -7,7 +7,7 @@ from datetime import datetime
 class StreetSegment:
     segment_id: str
     street_name: str | None
-    length_m: float
+    length_m: float | None
     snow_removal_code: int | None = None
     snow_removal_updated_at: datetime | None = None
 
