@@ -1,0 +1,38 @@
+{
+  "mode": "demo",
+  "returned_route_count": 4,
+  "routes": [
+    {
+      "id": "A",
+      "distance_m": 6400,
+      "duration_seconds": 1080,
+      "segments": [
+        {"id": "A-segment-1"}
+      ]
+    },
+    {
+      "id": "B",
+      "distance_m": 5900,
+      "duration_seconds": 1200,
+      "segments": [
+        {"id": "B-segment-1"}
+      ]
+    },
+    {
+      "id": "C",
+      "distance_m": 5600,
+      "duration_seconds": 1260,
+      "segments": [
+        {"id": "C-segment-1"}
+      ]
+    },
+    {
+      "id": "D",
+      "distance_m": 7200,
+      "duration_seconds": 1560,
+      "segments": [
+        {"id": "D-segment-1"}
+      ]
+    }
+  ]
+}
