@@ -258,3 +258,59 @@ def validate_segment_distance(distance_m):
 
     # Reuse the existing distance validation rules.
     return validate_distance(distance_m)
+
+
+def validate_snow_depth(snow_depth_cm):
+    """
+    Validate a snow depth measurement in centimeters.
+
+    A missing measurement is accepted as unknown.
+    A provided measurement must be a finite,
+    non-negative number.
+
+    Args:
+        snow_depth_cm: Snow depth in centimeters or None.
+
+    Returns:
+        bool: True if the value is valid or missing,
+              False otherwise.
+    """
+
+    # Missing data is allowed but must remain unknown.
+    if snow_depth_cm is None:
+        return True
+
+    # Reject strings, booleans, and other non-numeric values.
+    if isinstance(snow_depth_cm, bool):
+        return False
+
+    if not isinstance(snow_depth_cm, (int, float)):
+        return False
+
+    # Snow depth cannot be negative, NaN, or infinite.
+    if not isfinite(snow_depth_cm) or snow_depth_cm < 0:
+        return False
+
+    return True
+
+def validate_ice_risk(ice_risk):
+    """
+    Validate an estimated ice risk category.
+
+    Missing information is accepted as unknown.
+    """
+
+    # Missing ice risk information is allowed.
+    if ice_risk is None:
+        return True
+
+    # Ice risk categories must be strings.
+    if not isinstance(ice_risk, str):
+        return False
+
+    # Accepted risk categories.
+    valid_risks = {"Low", "Medium", "High"}
+
+    return ice_risk in valid_risks
+
+

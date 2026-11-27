@@ -26,7 +26,9 @@ from app.data_validator import (
     validate_removal_status,
     validate_timestamp,
     validate_route,
-    validate_segment_distance
+    validate_segment_distance,
+    validate_snow_depth,
+    validate_ice_risk
 )
 
 
@@ -324,3 +326,65 @@ def test_invalid_segment_distance():
     assert validate_segment_distance("unknown") is False
     assert validate_segment_distance(True) is False
     assert validate_segment_distance(float("nan")) is False
+
+
+def test_valid_snow_depth():
+    """
+    Verify that valid snow depth measurements are accepted.
+    """
+
+    # Zero is valid because a station may report no snow.
+    assert validate_snow_depth(0) is True
+    assert validate_snow_depth(8) is True
+    assert validate_snow_depth(15.5) is True
+
+
+def test_missing_snow_depth():
+    """
+    Verify that missing snow depth data is accepted as unknown.
+    """
+
+    assert validate_snow_depth(None) is True
+
+
+def test_invalid_snow_depth():
+    """
+    Verify that invalid snow depth values are rejected.
+    """
+
+    assert validate_snow_depth(-5) is False
+    assert validate_snow_depth("much snow") is False
+    assert validate_snow_depth(True) is False
+    assert validate_snow_depth(float("nan")) is False
+    assert validate_snow_depth(float("inf")) is False
+
+
+def test_valid_ice_risk():
+    """
+    Verify that recognized ice risk categories are accepted.
+    """
+
+    assert validate_ice_risk("Low") is True
+    assert validate_ice_risk("Medium") is True
+    assert validate_ice_risk("High") is True
+
+
+def test_missing_ice_risk():
+    """
+    Verify that missing ice risk information is accepted
+    as unknown.
+    """
+
+    assert validate_ice_risk(None) is True
+
+
+def test_invalid_ice_risk():
+    """
+    Verify that unsupported ice risk values are rejected.
+    """
+
+    assert validate_ice_risk("Extreme") is False
+    assert validate_ice_risk("low") is False
+    assert validate_ice_risk("") is False
+    assert validate_ice_risk(10) is False
+    assert validate_ice_risk(True) is False
